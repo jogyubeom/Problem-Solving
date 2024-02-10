@@ -7,8 +7,8 @@ checklist = list(map(int, input().split()))     # 확인할 정수들
 for n in range(N):
     my_dict[my_list[n]] = 0
 
-for n in range(M):
-    if checklist[n] in my_dict:
+for n in checklist:
+    if n in my_dict:
         print(1, end=' ')
     else:
         print(0, end=' ')
