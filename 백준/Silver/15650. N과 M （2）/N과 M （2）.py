@@ -1,0 +1,19 @@
+def pick(M):
+    if M == 0:
+        print(*result)
+        return
+
+    for n in range(1, N+1):
+        if n not in result:
+            if len(result) == 0:
+                result.append(n)
+                pick(M-1)
+                result.pop()
+            elif n > result[-1]:
+                result.append(n)
+                pick(M - 1)
+                result.pop()
+
+N, M = map(int, input().split())    # 수열 크기, 고를 개수
+result = []
+pick(M)
