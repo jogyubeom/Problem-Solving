@@ -43,6 +43,4 @@ for tc in range(1, 1 + T):
                         count_W += len(tmp)
                         count_B -= len(tmp)
                     break
-
-
     print(f'#{tc} {count_B} {count_W}')
