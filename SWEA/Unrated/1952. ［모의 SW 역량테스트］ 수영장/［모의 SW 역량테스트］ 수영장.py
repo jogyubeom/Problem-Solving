@@ -1,28 +1,20 @@
-from collections import deque
-
-
-def bfs(month, sum_cost):
-    global min_cost
-    que = deque()
-    que.append((month, sum_cost))
-    while que:
-        now, c = que.popleft()
-        if c > min_cost:
-            continue
-        if now >= 12:
-            min_cost = min(min_cost, c)
-            continue
-        que.append((now+1, c + cost[0] * calender[now]))
-        if calender[now] != 0:
-            que.append((now+1, c + cost[1]))
-        que.append((now+3, c + cost[2]))
-
-
 T = int(input())
-for tc in range(1, T + 1):
-    cost = list(map(int, input().split()))  # 이용권 요금
-    calender = list(map(int, input().split()))  # 1년 이용계획
-    min_cost = 1e9
-    bfs(0, 0)
-    min_cost = min(min_cost, cost[3])
+for tc in range(1,1+T):
+    cost = list(map(int, input().split()))
+    # 인덱스가 1월부터 들어갔으면 좋겠다! 그럼 0 리스트 하나 더해주면 된다.
+    days = [0] + list(map(int, input().split()))
+    # DP 배열
+    plans = [0] * 13
+
+    # 1~12월까지 반복
+    for i in range(1, 13):
+        # 현재 달의 최소 비용 계산
+        # 이전 달 + 1일권 구입 / 이전 달 + 1달권 구입 / 3달 전 + 3달권 구입 중에서 최소값!
+        plans[i] = min(plans[i-1] + days[i] * cost[0], plans[i-1] + cost[1])
+
+        if i >= 3:
+            plans[i] = min(plans[i], plans[i-3] + cost[2])
+
+    # 12월까지의 계산 결과와 1년권 가격을 비교
+    min_cost = min(plans[12], cost[3])
     print(f'#{tc} {min_cost}')
