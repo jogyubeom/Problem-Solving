@@ -1,28 +1,28 @@
-def bfs(s):
+def bfs(start):
     q = []
-    visited = [0] * 101
-    q.append(s)
-    visited[s] = 1
+    visited[start] = 1
+    depth = 1
+    q.append(start)
     while q:
-        t = q.pop(0)
-        for i in adjl[t]:
-            if visited[i] == 0:
-                q.append(i)
-                visited[i] = 1 + visited[t]
-    return visited
+        now = q.pop(0)
+        for to in adjl[now]:
+            if visited[to]:
+                continue
+            visited[to] = visited[now] + 1
+            q.append(to)
+
 
 for tc in range(1, 11):
-    l, s = map(int, input().split())  # 간선 개수 * 2, 시작점 입력
-    line = list(map(int, input().split()))  # 간선 조합들
-    adjl = [[] for _ in range(101)]
-    for i in range(l // 2):
-        n1, n2 = line[i * 2], line[i * 2 + 1]
-        adjl[n1].append(n2)
-    contact = bfs(s)
-    max_v = max(contact)
-    my_list = []
-    for n in range(101):
-        if contact[n] == max_v:
-            my_list.append(n)
-    result = max(my_list)
-    print(f'#{tc} {result}')
+    N, start = map(int, input().split())    # 입력 길이, 시작점
+    arr = list(map(int, input().split()))
+    visited = [0] * 101     # 방문 표시
+    adjl = [[] for _ in range(101)]     # 간선 정보
+    for i in range(N//2):
+        adjl[arr[2*i]].append(arr[2*i+1])
+    bfs(start)
+    max_depth = max(visited)
+    max_num = 0
+    for num in range(101):
+        if visited[num] == max_depth:
+            max_num = max(max_num, num)
+    print(f'#{tc} {max_num}')
