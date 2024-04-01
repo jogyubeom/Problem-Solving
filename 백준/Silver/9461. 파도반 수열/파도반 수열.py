@@ -9,7 +9,7 @@ def find(x):
 T = int(input())
 arr = [1, 1, 1, 2, 2, 3, 4, 5, 7, 9]
 for i in range(10, 100):
-    new = arr[i-2] + arr[i-3]
+    new = arr[i-1] + arr[i-5]
     arr.append(new)
 for tc in range(T):
     N = int(input())
